@@ -48,9 +48,9 @@ def add_student(name):
     for school in schools:
         if school['name'] == name:
             new_student = {'first_name': data['first_name'], 'last_name': data['last_name'], 'GPA': data['GPA'], 'Year': data['Year']}
-            store['students'].append(new_student)
+            school['students'].append(new_student)
             return jsonify(new_student)
     return jsonify({'Error': 'school not found'})
-    
+
 
 app.run(port=3030, debug=True)
