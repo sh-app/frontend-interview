@@ -3,12 +3,20 @@
 ### Setup
 - Clone repository
 If you don't have pip: https://pip.pypa.io/en/stable/installing/
-If you don't have virtualenv: ``` pip install virtualenv ```
+If you don't have virtualenv:
+
+``` pip install virtualenv ```
+
 - Install requirements
+
 ``` virtualenv venv ```
+
 ``` source venv/bin/activate ```
+
 ``` pip install -r requirements.txt ```
+
 - Start Flask app
+
 ``` python app.py ```
 
 ### Building the frontend
