@@ -2,7 +2,9 @@
 
 ### Setup
 - Clone repository
+
 If you don't have pip: https://pip.pypa.io/en/stable/installing/
+
 If you don't have virtualenv:
 
 ``` pip install virtualenv ```
@@ -21,7 +23,9 @@ If you don't have virtualenv:
 
 ### Building the frontend
 - *Optional* If you need to install Javascript libraries/frameworks:
+
 ``` npm install <package name> ```
+
 - Flask will render templates/index.html-- **This should be your starting point!**
 - Index.html contains commented links for a few common CSS/Javascript libaries.  You may use these or add any others you deem useful.
 - You may add additional html files to templates/ or additional Javascript/CSS files to templates/frontend
