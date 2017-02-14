@@ -4,26 +4,93 @@
     <meta charset="utf-8">
     <title>Schools and Students</title>
     <!-- jQuery 3 -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <!-- JQuery 2 -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
 
     <!-- Bootstrap 3 -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!-- Bootstrap 4 -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
-
     <!-- INK -->
     <!-- <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
     <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script> -->
   </head>
-  <body>
+  <style>
 
+  .school {
+    margin: 15px;
+    background: rgb(200, 200, 200);
+  }
+  #school {
+    font-size: 24px;
+    text-transform: uppercase;
+  }
+
+  ul {
+    background: rgb(220, 220, 220)
+  }
+  </style>
+  <body>
+    <div class="container">
+      <div class="school"></div>
+    </div>
+    <script>
+    // Get Request from Api calls
+    function fetchInfo() {
+      fetch("http://localhost:3030/schools").then(function(response) {
+        return response.json();
+      }).then(function(json) {
+
+        // Add School Button
+        $( ".school" ).append($('<button class="btn btn-secondary">Add School</button>').click(addSchool));
+
+        json.schools.forEach(function(item){
+
+          /* After retrieving info, display on the page */
+
+          // school name - for each school display the student info
+          $( ".school" ).append('<div id="school">' + item.name + '</div>');
+
+          item.students.forEach(function(person){
+
+            // student name
+            var student = $('<div id="student"></div>');
+            student.text(person.first_name + ' ' + person.last_name)
+            var ul = $('<ul></ul>')
+
+            // student info
+            ul.append(('<li>' + '<a>' + 'GPA: ' + person.GPA + '</a>' + '</li>'))
+            ul.append(('<li>' + '<a>' + 'Year: ' + person.Year + '</a>' +'</li>'))
+            student.append(ul)
+            $( ".school" ).append(student)
+          })
+        })
+      });
+    }
+    // start the function
+    fetchInfo();
+
+    function addSchool() {
+      console.log('adding school')
+      var data = new FormData();
+        data.append( "json", JSON.stringify( { school : { name: 'newSchool' } } ) );
+        fetch("http://localhost:3030/school",
+        {
+            method: "POST",
+            body: data
+        })
+        .then(function(res){ return res.json(); })
+        .then(function(data){ alert( JSON.stringify( data ) ) })
+    }
+    function add_student(name) {
+
+    }
+    </script>
   </body>
 </html>
